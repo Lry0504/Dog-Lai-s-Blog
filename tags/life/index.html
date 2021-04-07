@@ -6,7 +6,7 @@
     
     
     
-    <title>归档: 2021/4 | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <title>标签: life | Dog Lai&#39;s Blog | Front-end development engineer</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -42,7 +42,7 @@
     <meta name="description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dog Lai&#39;s Blog">
-<meta property="og:url" content="https://lry61.cn/Joy-blog/archives/2021/04/index.html">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/tags/life/index.html">
 <meta property="og:site_name" content="Dog Lai&#39;s Blog">
 <meta property="og:description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:locale" content="zh_CN">
@@ -93,14 +93,14 @@
                   </a>
               </li>
             
-              <li class="waves-block waves-effect active">
+              <li class="waves-block waves-effect">
                   <a href="/Joy-blog/archives"  >
                     <i class="icon icon-lg icon-archives"></i>
                     <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
                   </a>
               </li>
             
-              <li class="waves-block waves-effect">
+              <li class="waves-block waves-effect active">
                   <a href="/Joy-blog/tags"  >
                     <i class="icon icon-lg icon-tags"></i>
                     <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
@@ -159,7 +159,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">归档</div>
+        <div class="flex-col header-title ellipsis">标签: life</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -176,7 +176,7 @@
         </a> -->
     </div>
 </header>
-<header class="content-header archives-header">
+<header class="content-header tags-header">
     
     
     <div class="container fade-scale">
@@ -186,7 +186,19 @@
             </h1>
             <h5 class="subtitle">
                 
-                    <h1 class="archivestitle">日积月累，提升自我</h1>
+                    <h1 id="pagetitle" class="archivestitle"></h1>
+                    <script>
+                        if(location.href.indexOf('about')!=-1){
+                            pagetitle.textContent = 'About myself';
+                        }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
+                            var a=location.href.substring(location.href.length-5,location.href.length-1);
+                            if(a==='tags'){
+                                pagetitle.textContent = 'Tags';
+                            }else if(a==='ries'){
+                                pagetitle.textContent = 'Categories';
+                            }
+                        }
+                    </script>
                 
             </h5>
         </div>
@@ -194,25 +206,26 @@
 
 </header>
 
-<div class="container body-wrap fade">
-    
 
-    
+    <div class="container body-wrap fade">
+        
             
-            <h3 class="archive-separator">
-                <i class="icon icon-lg icon-folder-o"></i>&nbsp;&nbsp;
-                2021
-            </h3>
+            
+            <h5 class="tag-tip">
+                <i class="icon icon-tag"></i>
+                关于
+                <span style="color:rgb(100, 100, 100)">life</span>
+                共1篇文章
+            </h5>
             <div class="waterfall">
-    
-
-        <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/07/hello-world/'">
+            
+                <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/07/hello-world/'">
     <div class="archive-article-date">
       
       <time class="my-post-time">
         <i class="icon icon-lg icon-file-text-o"></i>
         &nbsp;
-          04-07
+          2021-04-07
       </time>
     </div>
     <div class="archive-article-inner">
@@ -233,11 +246,10 @@
 
     </div>
   </article>
+            
+            </div>
+        
 
-    
-    </div>
-
-    
 </div>
 
         <footer class="footer">

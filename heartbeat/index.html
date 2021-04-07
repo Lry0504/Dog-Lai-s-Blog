@@ -6,7 +6,7 @@
     
     
     
-    <title>归档: 2021/4 | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <title>Dog Lai&#39;s Blog | Front-end development engineer</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -42,10 +42,12 @@
     <meta name="description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dog Lai&#39;s Blog">
-<meta property="og:url" content="https://lry61.cn/Joy-blog/archives/2021/04/index.html">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/heartbeat/index.html">
 <meta property="og:site_name" content="Dog Lai&#39;s Blog">
 <meta property="og:description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-07T12:00:40.000Z">
+<meta property="article:modified_time" content="2021-04-07T12:01:06.104Z">
 <meta property="article:author" content="Dog Lai">
 <meta property="article:tag" content="Code, life, thinking">
 <meta name="twitter:card" content="summary">
@@ -93,7 +95,7 @@
                   </a>
               </li>
             
-              <li class="waves-block waves-effect active">
+              <li class="waves-block waves-effect">
                   <a href="/Joy-blog/archives"  >
                     <i class="icon icon-lg icon-archives"></i>
                     <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
@@ -159,7 +161,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">归档</div>
+        <div class="flex-col header-title ellipsis"></div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -176,7 +178,7 @@
         </a> -->
     </div>
 </header>
-<header class="content-header archives-header">
+<header class="content-header page-header">
     
     
     <div class="container fade-scale">
@@ -186,7 +188,19 @@
             </h1>
             <h5 class="subtitle">
                 
-                    <h1 class="archivestitle">日积月累，提升自我</h1>
+                    <h1 id="pagetitle" class="archivestitle"></h1>
+                    <script>
+                        if(location.href.indexOf('about')!=-1){
+                            pagetitle.textContent = 'About myself';
+                        }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
+                            var a=location.href.substring(location.href.length-5,location.href.length-1);
+                            if(a==='tags'){
+                                pagetitle.textContent = 'Tags';
+                            }else if(a==='ries'){
+                                pagetitle.textContent = 'Categories';
+                            }
+                        }
+                    </script>
                 
             </h5>
         </div>
@@ -194,50 +208,28 @@
 
 </header>
 
-<div class="container body-wrap fade">
+
+<div class="container body-wrap">
+    <article class="page-article fade" itemprop="blogPage">
+        
+            <div class="card page-about-me flex-row">
+                <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="/Joy-blog/img/avatar.jpg"></a>
+                <div class="content flex-col">
+                    <p><strong>Dog Lai</strong></p>
+                    <p><em>Front-end development engineer</em></p>
+                    <p>阳光灿烂活泼可爱，喜欢小猫小狗，喜欢听民谣，酷爱旅行，电子产品发烧友...</p>
+                </div>
+            </div>
+        
+
+        
+
+
+        
+
+    </article>
     
 
-    
-            
-            <h3 class="archive-separator">
-                <i class="icon icon-lg icon-folder-o"></i>&nbsp;&nbsp;
-                2021
-            </h3>
-            <div class="waterfall">
-    
-
-        <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/07/hello-world/'">
-    <div class="archive-article-date">
-      
-      <time class="my-post-time">
-        <i class="icon icon-lg icon-file-text-o"></i>
-        &nbsp;
-          04-07
-      </time>
-    </div>
-    <div class="archive-article-inner">
-      
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/Joy-blog/2021/04/07/hello-world/">Hello World</a>
-    </h3>
-  
-
-
-
-      <br/>
-      
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/life/" rel="tag">life</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/test/" rel="tag">test</a></li></ul>
-
-    </div>
-  </article>
-
-    
-    </div>
-
-    
 </div>
 
         <footer class="footer">
