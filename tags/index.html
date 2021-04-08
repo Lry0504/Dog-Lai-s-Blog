@@ -110,7 +110,7 @@
               </li>
             
               <li class="waves-block waves-effect">
-                  <a href="/Joy-blog/life"  >
+                  <a href="/Joy-blog/artitalk"  >
                     <i class="icon icon-lg icon-heartbeat"></i>
                     <span>圈子</span><i class="icon icon-lg icon-caret-left"></i>
                   </a>
@@ -190,16 +190,23 @@
                 
                     <h1 id="pagetitle" class="archivestitle"></h1>
                     <script>
-                        if(location.href.indexOf('about')!=-1){
-                            pagetitle.textContent = 'About myself';
-                        }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
-                            var a=location.href.substring(location.href.length-5,location.href.length-1);
-                            if(a==='tags'){
-                                pagetitle.textContent = 'Tags';
-                            }else if(a==='ries'){
-                                pagetitle.textContent = 'Categories';
-                            }
-                        }
+                      var arr = location.href.split("Joy-blog/");
+                      switch (arr[1]) {
+                        case 'about/':
+                          pagetitle.textContent = 'About myself';
+                          break;
+                        case 'tags/':
+                          pagetitle.textContent = 'Tags';
+                          break;
+                        case 'categories/':
+                          pagetitle.textContent = 'Categories';
+                          break;
+                        case 'artitalk/':
+                          pagetitle.textContent = '圈子';
+                          break;
+                        default:
+                          break;
+                      }
                     </script>
                 
             </h5>
