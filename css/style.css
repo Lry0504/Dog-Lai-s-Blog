@@ -3117,6 +3117,10 @@ hr,
 .footer.toc {
   margin-right: 21% !important;
 }
+.footer .icon-heart {
+  color: #ff0000;
+  animation: heartbreak 1.33s ease-in-out infinite;
+}
 .power {
   margin: 3px auto !important;
 }
@@ -3165,6 +3169,26 @@ hr,
   }
   .license {
     display: none;
+  }
+}
+@keyframes heartbreak {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  30% {
+    transform: scale(0.9);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1);
+  }
+  50%,
+  70% {
+    transform: scale(1.1);
   }
 }
 .top-header {
@@ -4177,6 +4201,9 @@ pre .javascript .function {
   transition: width 350ms;
   text-decoration: underline;
   outline: 0;
+}
+.post-card .post-meta .icon-lg {
+  vertical-align: baseline;
 }
 .post-card-title {
   word-break: break-all;
