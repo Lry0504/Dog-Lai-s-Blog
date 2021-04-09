@@ -3549,8 +3549,9 @@ pre .javascript .function {
   line-height: 24px;
   opacity: 0.8;
 }
-.post-list-item .article-card .post-content {
-  border-bottom: 1px dashed #ccc;
+.post-list-item .article-card .post-footer {
+  margin: 0;
+  border-top: 1px dashed #ccc;
 }
 .post-title {
   margin: 0 0 16px;
@@ -3575,7 +3576,7 @@ pre .javascript .function {
 .post-count-custom {
   letter-spacing: 1px;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .article-category-list {
   position: relative;
@@ -3728,7 +3729,7 @@ pre .javascript .function {
   .post-count-custom {
     font-size: 13px;
     margin-top: -15px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   .post-meta {
     font-size: 12px;

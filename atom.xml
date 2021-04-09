@@ -6,7 +6,7 @@
   <link href="https://lry61.cn/Joy-blog/atom.xml" rel="self"/>
   
   <link href="https://lry61.cn/Joy-blog/"/>
-  <updated>2021-04-07T11:49:59.121Z</updated>
+  <updated>2021-04-09T13:27:00.342Z</updated>
   <id>https://lry61.cn/Joy-blog/</id>
   
   <author>
@@ -17,23 +17,19 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://lry61.cn/Joy-blog/2021/04/07/hello-world/"/>
-    <id>https://lry61.cn/Joy-blog/2021/04/07/hello-world/</id>
+    <title>Welcome to Dog Lai&#39;s Blog</title>
+    <link href="https://lry61.cn/Joy-blog/2021/04/07/welcome/"/>
+    <id>https://lry61.cn/Joy-blog/2021/04/07/welcome/</id>
     <published>2021-04-07T01:13:25.653Z</published>
-    <updated>2021-04-07T11:49:59.121Z</updated>
+    <updated>2021-04-09T13:27:00.342Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome</p><span id="more"></span><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></tbody></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;Welcome&lt;/p&gt;</summary>
+    <content type="html"><![CDATA[<p>Welcome to Dog Lai’s Blog</p><span id="more"></span><p>之前在网上查资料时，经常能看到别人高大上的Blog，脑子里都有个Blog 2.0的想法，刚好这段时间项目期不紧，就想着把之前的Blog升级下，发布一个 Blog 2.0-beat版（花里胡哨的版本）</p><h3 id="Blog-2-0-beat奇思妙想"><a href="#Blog-2-0-beat奇思妙想" class="headerlink" title="Blog 2.0-beat奇思妙想"></a>Blog 2.0-beat奇思妙想</h3><p>对我而言，我希望2.0版本的博客不单单只是一个博客，它更像微信一样，是一个小型社交平台。我不仅可以在这里记录项目中遇到的问题难点，还能够分享生活中的点点滴滴，与别人交流、发朋友圈、上传相册、放置简历…<br>正如我想的那样，2.0-beat coming！</p><h3 id="artitalk-圈子"><a href="#artitalk-圈子" class="headerlink" title="artitalk 圈子"></a>artitalk 圈子</h3><p>对我而言，有时候想在朋友圈发一些自己的想法有诸多不便，我迫切的需要一个平台表达我的某些想法意见；基于此，artitalk 圈子运营而生，它满足我目前的所有幻想，感情树洞、idea…对我意义重大!</p><h3 id="photos-相册"><a href="#photos-相册" class="headerlink" title="photos 相册"></a>photos 相册</h3><p>我希望可以将自己的相册移植到博客中，正好gitHub仓库可以作为图床使用。</p><blockquote><p>我希望后面可以使用时间线来布局我的相册，并且能够配上简短的文字说明<br>这在后面会慢慢考虑功能的实现</p></blockquote><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果你喜欢我的博客，请给我个Star吧~</p><blockquote><p>欢迎留言<br>欢迎技术交流<br>欢迎谈论博客优化</p></blockquote><p>感谢你的阅读 Thanks♪(･ω･)ﾉ</p>]]></content>
     
     
+    <summary type="html">&lt;p&gt;Welcome to Dog Lai’s Blog&lt;/p&gt;</summary>
     
     
-    <category term="test" scheme="https://lry61.cn/Joy-blog/tags/test/"/>
     
-    <category term="life" scheme="https://lry61.cn/Joy-blog/tags/life/"/>
     
   </entry>
   
