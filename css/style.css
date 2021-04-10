@@ -5156,6 +5156,16 @@ pre .javascript .function {
 .page-about-me .content p {
   margin-top: 0;
 }
+.page-about-me .content .about-url {
+  color: #0099ff;
+  cursor: pointer;
+  margin-left: 5px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.page-about-me .content .about-url:hover {
+  color: #0077ff;
+}
 .page-modal {
   display: none;
   position: fixed;
