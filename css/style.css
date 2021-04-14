@@ -4400,7 +4400,7 @@ pre .javascript .function {
 .post-content {
   text-align: left;
   font-family: "Helvetica Neue", "Microsoft Yahei", "Microsoft Yahei", -apple-system, sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   padding-bottom: 10px;
   line-height: 1.8;
   font-size: 120%;
@@ -4431,14 +4431,8 @@ pre .javascript .function {
   outline: 0;
 }
 .post-content > .highlight,
-.post-content > .image-bubble,
 .post-content > pre {
-  margin-left: -35px;
-  margin-right: -35px;
-}
-.post-content > .highlight,
-.post-content > pre {
-  padding: 10px 35px 20px 35px;
+  padding: 0 10px;
 }
 .post-content .image-bubble {
   margin-top: 20px;
