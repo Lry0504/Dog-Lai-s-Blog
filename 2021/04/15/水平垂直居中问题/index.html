@@ -6,7 +6,7 @@
     
     
     
-    <title>BFC记录 | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <title>水平垂直居中问题 | Dog Lai&#39;s Blog | Front-end development engineer</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -39,15 +39,15 @@
 
 
     
-    <meta name="description" content="什么是BFC？原理？使用场景？">
+    <meta name="description" content="css中常用的水平垂直居中记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BFC记录">
-<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:title" content="水平垂直居中问题">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Dog Lai&#39;s Blog">
-<meta property="og:description" content="什么是BFC？原理？使用场景？">
+<meta property="og:description" content="css中常用的水平垂直居中记录">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-15T07:35:01.000Z">
-<meta property="article:modified_time" content="2021-04-15T07:35:01.828Z">
+<meta property="article:published_time" content="2021-04-15T11:28:04.000Z">
+<meta property="article:modified_time" content="2021-04-15T11:28:04.438Z">
 <meta property="article:author" content="Dog Lai">
 <meta property="article:tag" content="基础知识">
 <meta property="article:tag" content="Css">
@@ -162,7 +162,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">BFC记录</div>
+        <div class="flex-col header-title ellipsis">水平垂直居中问题</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -202,19 +202,19 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>目录</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFBFC%EF%BC%9F"><span class="post-toc-number">1.</span> <span class="post-toc-text">什么是BFC？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BCF%E5%8E%9F%E7%90%86"><span class="post-toc-number">2.</span> <span class="post-toc-text">BCF原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BABFC"><span class="post-toc-number">3.</span> <span class="post-toc-text">如何创建BFC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#BFC%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="post-toc-number">4.</span> <span class="post-toc-text">BFC使用场景</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#flex%E5%B8%83%E5%B1%80"><span class="post-toc-number">1.</span> <span class="post-toc-text">flex布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#flex-margin"><span class="post-toc-number">2.</span> <span class="post-toc-text">flex + margin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#absolute-transform"><span class="post-toc-number">3.</span> <span class="post-toc-text">absolute + transform</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#table-cell"><span class="post-toc-number">4.</span> <span class="post-toc-text">table-cell</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#grid%E5%B8%83%E5%B1%80"><span class="post-toc-number">5.</span> <span class="post-toc-text">grid布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#absolute-%E5%9B%9B%E4%B8%AA%E6%96%B9%E5%90%91%E5%80%BC%E7%9B%B8%E7%AD%89"><span class="post-toc-number">6.</span> <span class="post-toc-text">absolute + 四个方向值相等</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#after%E4%BC%AA%E5%85%83%E7%B4%A0"><span class="post-toc-number">7.</span> <span class="post-toc-text">after伪元素</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#before%E4%BC%AA%E5%85%83%E7%B4%A0"><span class="post-toc-number">8.</span> <span class="post-toc-text">before伪元素</span></a></li></ol>
         </nav>
     </aside>
    
-<article id="post-BFC记录"
+<article id="post-水平垂直居中问题"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">BFC记录</h1>
+        <h1 class="post-card-title">水平垂直居中问题</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
-            <time class="post-time" title="2021-04-15 15:35:01" datetime="2021-04-15T07:35:01.000Z"  itemprop="datePublished">2021-04-15</time>
+            <time class="post-time" title="2021-04-15 19:28:04" datetime="2021-04-15T11:28:04.000Z"  itemprop="datePublished">2021-04-15</time>
 
             <br id="mybreak"/>
             
@@ -236,35 +236,33 @@
             阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>什么是BFC？原理？使用场景？</p>
+            <p>css中常用的水平垂直居中记录</p>
 <span id="more"></span>
 
-<h2 id="什么是BFC？"><a href="#什么是BFC？" class="headerlink" title="什么是BFC？"></a>什么是BFC？</h2><p>BFC(Block formatting context)直译为“块级格式化上下文”，它是一个独立的渲染区域，规定了内部如何布局，并且与区域外部毫不相关。</p>
-<blockquote>
-<p>通俗一点，创建了BFC的元素就是个独立的盒子，里面子元素的布局不会影响外面元素。</p>
-</blockquote>
-<h2 id="BCF原理"><a href="#BCF原理" class="headerlink" title="BCF原理"></a>BCF原理</h2><ol>
-<li>内部的Box在垂直方向一个接一个的放置。</li>
-<li>Box垂直方向距离由margin决定，属于同一个BFC的两个相邻Box的margin会重叠。</li>
-<li>每个元素的margin box左边，与包含块border box的左边相接触，即使存在浮动也是如此。</li>
-<li>BFC区域不与float box重叠。</li>
-<li>BFC里面的子元素不会影响外面的元素。</li>
-<li>计算BFC高度时，浮动元素也参与计算。</li>
-</ol>
-<h2 id="如何创建BFC"><a href="#如何创建BFC" class="headerlink" title="如何创建BFC"></a>如何创建BFC</h2><p>满足以下任一条件即可创建BFC:</p>
-<ol>
-<li>根元素</li>
-<li>float属性不是none</li>
-<li>position不为static、relative</li>
-<li>overflow不为visible</li>
-<li>display为inline-block、table-cell、table-caption、flex、line-flex…</li>
-</ol>
-<h2 id="BFC使用场景"><a href="#BFC使用场景" class="headerlink" title="BFC使用场景"></a>BFC使用场景</h2><ol>
-<li>防止margin重叠</li>
-<li>清除内部浮动(解决高度塌陷)</li>
-<li>自适应两栏布局</li>
-</ol>
+<p>项目开发中我们经常会遇到盒子的水平垂直居中问题，定宽高的方式有很多，这里不再记录，主要记录下在不定宽高情况下的实现方式。</p>
+<p>下面用到的盒子如下：</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="parent"&gt;</span><br><span class="line">  &lt;div class="son"&gt;测试水平垂直居中&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></tbody></table></figure>
 
+<h2 id="flex布局"><a href="#flex布局" class="headerlink" title="flex布局"></a>flex布局</h2>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  display: flex;</span><br><span class="line">  align-items: center;</span><br><span class="line">  justify-content: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="flex-margin"><a href="#flex-margin" class="headerlink" title="flex + margin"></a>flex + margin</h2>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  display: flex;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  margin: auto;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="absolute-transform"><a href="#absolute-transform" class="headerlink" title="absolute + transform"></a>absolute + transform</h2><p>常用于图片的居中显示</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  position: relative;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 50%;</span><br><span class="line">  left: 50%;</span><br><span class="line">  transform: translate(-50%, -50%);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="table-cell"><a href="#table-cell" class="headerlink" title="table-cell"></a>table-cell</h2><p>利用表格布局方式实现</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  display: table-cell;</span><br><span class="line">  text-align: center;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="grid布局"><a href="#grid布局" class="headerlink" title="grid布局"></a>grid布局</h2>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  display: grid;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  align-self: center;</span><br><span class="line">  justify-self: center;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="absolute-四个方向值相等"><a href="#absolute-四个方向值相等" class="headerlink" title="absolute + 四个方向值相等"></a>absolute + 四个方向值相等</h2><p>这种方式需要设置子元素的宽高、并且需要设置”margin: auto”</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  position: relative;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  bottom: 0;</span><br><span class="line">  width: xxx;</span><br><span class="line">  height: xxx;</span><br><span class="line">  margin: auto;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="after伪元素"><a href="#after伪元素" class="headerlink" title="after伪元素"></a>after伪元素</h2><p>子元素display需要设置为”inline-block”才生效</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  text-align: center;</span><br><span class="line">}</span><br><span class="line">.parent::after {</span><br><span class="line">  content: '';</span><br><span class="line">  display: inline-block;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">  height: 100%;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  display: inline-block;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="before伪元素"><a href="#before伪元素" class="headerlink" title="before伪元素"></a>before伪元素</h2><p>“font-size: 0” 可以消除标签之间的间隙。</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.parent {</span><br><span class="line">  text-align: center;</span><br><span class="line">  font-size: 0;</span><br><span class="line">}</span><br><span class="line">.parent::before {</span><br><span class="line">  content: '';</span><br><span class="line">  display: inline-block;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">  height: 100%;</span><br><span class="line">  font-size: 14px;</span><br><span class="line">}</span><br><span class="line">.son {</span><br><span class="line">  display: inline-block;</span><br><span class="line">  vertical-align: middle;</span><br><span class="line">  font-size: 14px;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
         </div>
 
         <div>
@@ -274,12 +272,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2021-04-15T07:35:01.828Z" itemprop="dateUpdated">2021-04-15 15:35:01</time>
+    最后更新：<time datetime="2021-04-15T11:28:04.438Z" itemprop="dateUpdated">2021-04-15 19:28:04</time>
 </span>
 
 
         
-          原文链接：<a href="/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/04/15/BFC记录/</a>
+          原文链接：<a href="/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/04/15/水平垂直居中问题/</a>
         
     </div>
     <footer>
@@ -311,7 +309,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&title=《BFC记录》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&title=《水平垂直居中问题》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -321,22 +319,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&title=《BFC记录》 — Dog Lai's Blog&source=什么是BFC？原理？使用场景？" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&title=《水平垂直居中问题》 — Dog Lai's Blog&source=css中常用的水平垂直居中记录" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BFC记录》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《水平垂直居中问题》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -356,21 +354,13 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" id="post-prev" class="post-nav-link">
-        <h4 class="title" >
-          上一篇：水平垂直居中问题
-        </h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/Joy-blog/2021/04/14/call%E3%80%81apply%E3%80%81bind%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E5%AE%9E%E7%8E%B0/" id="post-next" class="post-nav-link">
-        <h4 class="title" data-hover="下一篇：call、apply、bind的区别与实现">下一篇：call、apply、bind的区别与实现</h4>
+      <a href="/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：BFC记录">下一篇：BFC记录</h4>
       </a>
     </div>
   
@@ -493,7 +483,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&title=《BFC记录》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&title=《水平垂直居中问题》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -503,22 +493,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&title=《BFC记录》 — Dog Lai's Blog&source=什么是BFC？原理？使用场景？" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&title=《水平垂直居中问题》 — Dog Lai's Blog&source=css中常用的水平垂直居中记录" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BFC记录》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《水平垂直居中问题》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/15/BFC%E8%AE%B0%E5%BD%95/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/15/%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E9%97%AE%E9%A2%98/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -529,7 +519,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNUlEQVR42u3aQW7DMAwF0dz/0i7QVYEmynzSCSBqtAqa1tbTgqVIPh54Xb9r/fP/n/8u/uT177eWDBkytmVcy0W2u2aQd62PhvyVDBkyTmCQYFoLjuvn8+N780wZMmTIAIBXmyCbI0FchgwZMnjArV1c+YZkyJAho3OJrZXPeIL4pbu4DBkyNmSkjYFvfv5gf0OGDBmbMK5w8afVimvFXcmQIWM0Ix13SFuStZYD/7Y4tSFDhoytGPzKStoAnXGK9FifhFoZMmQMZZAErjZaUUs3+wmoDBkyZjN4k5JvPR3C6BT7ZMiQMZXBX1y7XqZltWIrQoYMGQcweLBLw2KnAcAvzDJkyDiNkYbaWjBN755v9ilDhozRDJJ49Qv3aVOTlNhkyJBxDiMtgaVhsXM0wRHLkCHjAMZd6V1adOuEcjQzIkOGjKEMXo6vNQZqTdA44MqQIWMQg18XeSk/PYi0RYr+AciQIWMcg5fA+sMTtRCM0lAZMmQcw0ivmrXWY6dd+vLoZciQMZTBgyBJB3myyMcvUAiWIUPGAQw+qnVXEkmGMPgxyZAhYzYjTdE69bwLLN4ilSFDxjmMK1yEXWuC8kN58kwZMmSMZvCVJmp8K8WhVRkyZBzGqI1Q8HDMA3E8G5LWDmXIkLE5gwfZTlOBv50X9WTIkCEj/ZwOWNQCdNDIlCFDxsGMtLjPU8/i4IUMGTIOYHSK9bVCW1qGu2HGTYYMGdsybrhAhpdVflhxgihDhoxpjB9G2Df1kk2jZwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD6klEQVR42u3aS27DMAwFwNz/0i3QbRDnPVJOC3S8ChpHlsYLlp/HI76+fq7nz8/3PF+vfnV9//M9+yceu3DgwIEDR3DUZOlXD0s2nW8x2UO7n+SMOHDgwIHjLEdyjHxzycHyZyWhN395b86OAwcOHDg+yJGTnTreLHmb7R8HDhw4cPwFjjYV3JQmZ2Q4cODAgeO3ONrS2/W2Zm2nPMHbFDeP1Upx4MCBA8ci6iU0f/nzh+Y7cODAgePfc3yV13Xy0/6lHU3Im1uzCwcOHDhw7DnaVCqJTe1IQVKwu/7tLDErMlocOHDgwBFz5GW+pP2zOcwmjUxaUEmwx4EDBw4cpzhOtX/akuKsfZWE+SEuDhw4cOBYcySJU56M7YcYNkXAWZPsTV6LAwcOHDhKjjywzR65eT954rcf3cOBAwcOHHdzJIteh9u2CHjjfxB5mwoHDhw4cKw5Zi2c2YGLgBeX//IksFgZBw4cOHAc5ZgNCpwK2Pk9dzwLBw4cOHDsOfKAlzR+ZiXF9p7N3t48HQcOHDhwHOLIg2h+f9siapPDtk0VjUTgwIEDB441R7ut/TBBnm61Y3mbNhUOHDhw4DjFsX/wrGyXBMVN8yn5bVEcxIEDBw4cR9tOm+3mgfNU6jhL5Ib/ceDAgQMHjkuOdkwtL8y16++HGPL9F80nHDhw4MBxiONsMM7Xz49xNrXDgQMHDhwbjnxMLQlsm3VmQxXtr97sHwcOHDhwHOVoy3ab9GwTkm8saOLAgQMHjjO9oTogfWaULVk/T+qShBAHDhw4cOw5CrPR0MAsAduXEYcvFQcOHDhwrDlmh98Ev2RkYcadB/vo1eLAgQMHjhFHEg5zrCTgJdtqW1xtOfLlSXHgwIEDxyGOs62j+5pS+fhCu59HEu1x4MCBA0fJ0aZSeYjND5bvJ4cuEkIcOHDgwLHmyBtF+cPaBOzUOrPAjAMHDhw4znLkJbm81TQbNbjjBbQJJA4cOHDg2HO0gwh5y6dtPuWJWfLc1XAeDhw4cOBYcMyOMXvw2cRvk2oWAw04cODAgWPEcWr4LP/2jsA5S/ZeFgdx4MCBA8eII2/8bCDyFK4dtkvSvDZdxIEDBw4cG45NWa2laYNu+6xNifNNRosDBw4cOCbrP9rg145EtLN7szQsb3e1rTUcOHDgwJFzzEpvbYKUr5kMH+TpYr4THDhw4MBxlqMNhHk9bZYmtS9js370BQ4cOHDguIGjHU1oQ2++n3bwokjwcODAgQPHL3FsZihm6VY7WpcPVeDAgQMHjjs4Zou2dyYoeQLZppS3tJ1w4MCBA8d6oGEzjnB3WbBN22Y7xIEDBw4cL779BnbnSUumqRm8AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
