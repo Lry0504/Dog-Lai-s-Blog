@@ -4435,8 +4435,7 @@ pre .javascript .function {
   padding: 0 10px;
 }
 .post-content .image-bubble {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  line-height: normal;
   text-align: center;
 }
 .post-content .image-caption {
