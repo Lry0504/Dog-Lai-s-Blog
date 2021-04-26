@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>JS数组去重 | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="JavaScript,基础知识">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="JS数组去重的几种实现方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS数组去重">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/index.html">
+<meta property="og:site_name" content="Dog Lai&#39;s Blog">
+<meta property="og:description" content="JS数组去重的几种实现方式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/%E5%8F%8C%E5%B1%82%E5%BE%AA%E7%8E%AF.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/indexOf.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/%E6%8E%92%E5%BA%8F%E5%90%8E%E5%8E%BB%E9%87%8D.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/includes.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/filter.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/reduce%2Bincludes.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/Set.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/hasOwnProperty_1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/hasOwnProperty_2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/Map.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/loop%E9%80%92%E5%BD%92.jpg">
+<meta property="article:published_time" content="2021-04-26T02:27:44.000Z">
+<meta property="article:modified_time" content="2021-04-26T02:27:44.984Z">
+<meta property="article:author" content="Dog Lai">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/%E5%8F%8C%E5%B1%82%E5%BE%AA%E7%8E%AF.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Dog Lai&#39;s Blog" href="https://lry61.cn/Joy-blog/atom.xml">
+    
+    <link rel="shortcut icon" href="/Joy-blog/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/Joy-blog/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    
+      <script>(function (i, s, o, g, r, a, m) {
+          i['DaoVoiceObject'] = r;
+          i[r] = i[r] ||
+            function () {
+              (i[r].q = i[r].q || []).push(arguments);
+            };
+          i[r].l = 1 * new Date();
+          a = s.createElement(o);
+          m = s.getElementsByTagName(o)[0];
+          a.async = 1;
+          a.src = g;
+          a.charset = 'utf-8';
+          m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', ('https:' === document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/68f0bc04.js", 'daovoice');
+        daovoice('init', {
+          app_id: "68f0bc04",
+          user_id: "NO_89757",
+          name: "Dog Lai",
+          email: "lry885175073@163.com"
+        });
+        daovoice('update');
+      </script>
+    
+            
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/Joy-blog/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/Joy-blog/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Dog Lai</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/artitalk"  >
+                    <i class="icon icon-lg icon-heartbeat"></i>
+                    <span>圈子</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/photos"  >
+                    <i class="icon icon-lg icon-image"></i>
+                    <span>相册</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/about"  >
+                    <i class="icon icon-lg icon-paper-plane"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:lry885175073@163.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Lry0504" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+              <a class="nav2item" data-title="微博" href="https://weibo.com/u/5234618200" target="_blank"title="微博" >
+                <i class="icon icon-lg icon-weibo weibo"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JS数组去重</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="https://lry61.cn/Joy-blog/atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+          <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%8F%8C%E5%B1%82%E5%BE%AA%E7%8E%AF"><span class="post-toc-number">1.</span> <span class="post-toc-text">双层循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#indexOf%E5%BE%AA%E7%8E%AF"><span class="post-toc-number">2.</span> <span class="post-toc-text">indexOf循环</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E6%8E%92%E5%BA%8F%E5%90%8E%E5%8E%BB%E9%87%8D"><span class="post-toc-number">3.</span> <span class="post-toc-text">排序后去重</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%88%A9%E7%94%A8includes"><span class="post-toc-number">4.</span> <span class="post-toc-text">利用includes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%88%A9%E7%94%A8filter"><span class="post-toc-number">5.</span> <span class="post-toc-text">利用filter</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#reduce-includes"><span class="post-toc-number">6.</span> <span class="post-toc-text">reduce + includes</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%88%A9%E7%94%A8Set"><span class="post-toc-number">7.</span> <span class="post-toc-text">利用Set</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%88%A9%E7%94%A8hasOwnProperty"><span class="post-toc-number">8.</span> <span class="post-toc-text">利用hasOwnProperty</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%88%A9%E7%94%A8Map"><span class="post-toc-number">9.</span> <span class="post-toc-text">利用Map</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%80%92%E5%BD%92"><span class="post-toc-number">10.</span> <span class="post-toc-text">递归</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-JS数组去重"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JS数组去重</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2021-04-26 10:27:44" datetime="2021-04-26T02:27:44.000Z"  itemprop="datePublished">2021-04-26</time>
+
+            <br id="mybreak"/>
+            
+<script>
+	mybreak.style="display:none";
+</script>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">5</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>JS数组去重的几种实现方式</p>
+<span id="more"></span>
+
+<p>JS数组去重问题也是近几年来面试手写的高频问题，这里简单记录下不同的实现方式及无法去重的情况。<br>下面数组应用于每个实现方式中</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let arr = [</span><br><span class="line">  1, 1, true, "true", "false",</span><br><span class="line">  false, NaN, "NaN", null, undefined,</span><br><span class="line">  15, undefined, 15, {}, 0,</span><br><span class="line">  "a", {}, 0, "a", NaN,</span><br><span class="line">  null, undefined</span><br><span class="line">]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="双层循环"><a href="#双层循环" class="headerlink" title="双层循环"></a>双层循环</h2><blockquote>
+<p>实现思路:<br>利用双层for循环嵌套，然后用splice去重<br>当循环数组第一层的值与第二层的值相同的时候，删除第二层相对应的值。</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">    for(let j = i + 1; j &lt; arr.length; j++) {</span><br><span class="line">      if(arr[i] === arr[j]) {</span><br><span class="line">        arr.splice(j, 1);</span><br><span class="line">        j--;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return arr;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/%E5%8F%8C%E5%B1%82%E5%BE%AA%E7%8E%AF.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果中可以看出：双层循环的方法<strong>无法去重NaN和{}</strong></p>
+<h2 id="indexOf循环"><a href="#indexOf循环" class="headerlink" title="indexOf循环"></a>indexOf循环</h2><blockquote>
+<p>实现思路:<br>利用indexOf循环数组，判断结果数组res中是否存在当前元素。如果存在，则跳过；否则把当前元素添加到结果数组res中。</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let res = [];</span><br><span class="line">  for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">    if(res.indexOf(arr[i]) === -1) {</span><br><span class="line">      res.push(arr[i]);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return res;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/indexOf.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：indexOf循环的方法<strong>无法去重NaN和{}</strong></p>
+<h2 id="排序后去重"><a href="#排序后去重" class="headerlink" title="排序后去重"></a>排序后去重</h2><blockquote>
+<p>实现思路:<br>将数组用sort排序后，相同的值便会在相邻位置。<br>结果数组先存入数组第一个值，然后从第二个值开始，判断与前一个值是否相同。如果相同，则说明重复；否则放进结果数组res中。</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  arr = arr.sort();</span><br><span class="line">  let res = [arr[0]];</span><br><span class="line">  for(let i = 1; i &lt; arr.length; i++) {</span><br><span class="line">    if(arr[i] !== arr[i - 1]) {</span><br><span class="line">      res.push(arr[i]);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return res;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/%E6%8E%92%E5%BA%8F%E5%90%8E%E5%8E%BB%E9%87%8D.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：排序后去重的方法<strong>无法去重NaN和{}</strong></p>
+<h2 id="利用includes"><a href="#利用includes" class="headerlink" title="利用includes"></a>利用includes</h2><blockquote>
+<p>实现思路:<br>判断结果数组中是否包含某个值；如果包含，则跳过；否则放进结果数组res中</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let res = [];</span><br><span class="line">  for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">    if(!res.includes(arr[i])) {</span><br><span class="line">      res.push(arr[i]);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return res;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/includes.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：includes的方法<strong>无法去重{}</strong></p>
+<h2 id="利用filter"><a href="#利用filter" class="headerlink" title="利用filter"></a>利用filter</h2><blockquote>
+<p>实现思路:<br>判断数组中当前元素的第一个索引是否是filter中当前的索引值</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  return arr.filter((item, index, arr) =&gt; {</span><br><span class="line">    return arr.indexOf(item) === index;</span><br><span class="line">  })</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/filter.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：filter的方法<strong>无法去重{}，并且把NaN删掉了</strong></p>
+<h2 id="reduce-includes"><a href="#reduce-includes" class="headerlink" title="reduce + includes"></a>reduce + includes</h2>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  return arr.reduce((acc, cur) =&gt;</span><br><span class="line">    acc.includes(cur) ? acc : [...acc, cur], []</span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/reduce%2Bincludes.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：reduce+includes的方法<strong>无法去重{}</strong></p>
+<h2 id="利用Set"><a href="#利用Set" class="headerlink" title="利用Set"></a>利用Set</h2><blockquote>
+<p>实现思路:<br>Set对象是值的集合，你可以按照插入的顺序迭代元素。Set对象中的元素只会出现一次，即Set中的元素是唯一的</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  return [...new Set(arr)];</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/Set.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：Set的方法<strong>无法去重{}</strong></p>
+<h2 id="利用hasOwnProperty"><a href="#利用hasOwnProperty" class="headerlink" title="利用hasOwnProperty"></a>利用hasOwnProperty</h2><p>hasOwnProperty方法会返回一个布尔值，指示对象本身属性中是否具有指定的属性（是否有指定的值）。此方法无法检查该对象的原型链中是否具有该属性，该属性必须是对象本身的一个成员。</p>
+<blockquote>
+<p>实现思路:<br>利用一个空对象obj，把数组的值存成obj对象的key值，如obj[arr[item1]] = true，判断另一个值obj[arr[item2]]是否存在，如果存在，则是相同的值</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let obj = {};</span><br><span class="line">  return arr.filter((item, index, arr) =&gt; {</span><br><span class="line">    return obj.hasOwnProperty(item) ? false : (obj[item] = true)</span><br><span class="line">  })</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/hasOwnProperty_1.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>从结果中可以看到，这个方法存在一些问题：true与”true”是不同的，但是<strong>Object[true]和Object[“true”]却是同一个引用(对象key值只能是字符串)</strong><br>解决办法：使用<code>typeof item + item</code>拼接成字符串作为key值</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let obj = {};</span><br><span class="line">  return arr.filter((item, index, arr) =&gt; {</span><br><span class="line">    return obj.hasOwnProperty(typeof item + item) ?</span><br><span class="line">    false : (obj[typeof item + item] = true)</span><br><span class="line">  })</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我们知道，如果你数组中存在对象时，如{value: 1}，typeof item + item的结果都是object[object Object]<br>解决办法：使用JSON.stringify()将对象序列化来避免相同的键值</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let obj = {};</span><br><span class="line">  return arr.filter((item, index, arr) =&gt; {</span><br><span class="line">    return obj.hasOwnProperty(typeof item + JSON.stringify(item)) ?</span><br><span class="line">    false : (obj[typeof item + JSON.stringify(item)] = true)</span><br><span class="line">  })</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/hasOwnProperty_2.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这种方式可以满足所有的条件去重。</p>
+<h2 id="利用Map"><a href="#利用Map" class="headerlink" title="利用Map"></a>利用Map</h2><blockquote>
+<p>实现思路:<br>创建一个空的Map数据结构，遍历需要去重的数组，把数组的每一个元素作为key存到Map中。<br>由于Map中不会出现相同的key值，所以最终得到的就是去重后的结果</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  let map = new Map();</span><br><span class="line">  let array = [];</span><br><span class="line">  for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">    if(map.has(arr[i])) { // 如果存在该key值</span><br><span class="line">      map.set(arr[i], true);</span><br><span class="line">    } else {</span><br><span class="line">      map.set(arr[i], false);</span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return array;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/Map.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：Map的方法<strong>无法去重{}</strong></p>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr) {</span><br><span class="line">  arr.sort(function(a, b) {</span><br><span class="line">    return a - b;</span><br><span class="line">  });</span><br><span class="line">  function loop(index) {</span><br><span class="line">    if(index &gt;= 1) {</span><br><span class="line">      if(arr[index] === arr[index - 1]) {</span><br><span class="line">        arr.splice(index, 1);</span><br><span class="line">      }</span><br><span class="line">      loop(index - 1);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  loop(arr.length - 1);</span><br><span class="line">  return arr;</span><br><span class="line">}</span><br><span class="line">console.log(unique(arr));</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://raw.githubusercontent.com/Lry0504/image_resources/master/blog/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/loop%E9%80%92%E5%BD%92.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上面结果可以看出：递归循环的方法<strong>无法去重NaN、null、0、”a”和{}</strong></p>
+
+        </div>
+
+        <div>
+  <div style="text-align:center;color: #999;font-size:14px;margin-bottom: 10px;">-------------本文结束<i class="icon icon-paw" style="margin: 0 3px;"></i>感谢您的阅读-------------</div>
+</div>
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2021-04-26T02:27:44.984Z" itemprop="dateUpdated">2021-04-26 10:27:44</time>
+</span>
+
+
+        
+          原文链接：<a href="/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/04/26/JS数组去重/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://lry61.cn/Joy-blog/about/'">
+            <img src="/Joy-blog/img/avatar.jpg" alt="Dog Lai">
+            <a>Dog Lai</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&title=《JS数组去重》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&title=《JS数组去重》 — Dog Lai's Blog&source=JS数组去重的几种实现方式" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS数组去重》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Joy-blog/2021/04/23/Array%E5%B8%B8%E7%94%A8api%E6%A2%B3%E7%90%86%E4%BA%8C/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：Array常用api梳理二">下一篇：Array常用api梳理二</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "BYSfKXO7eaaqTbA6NfbS9z62-MdYXbMMI",
+            appKey: "BjBVe7OxLYmKkrhuEsodMFHh",
+            avatar: "mm",
+            placeholder: "欢迎留言~~ 记得填写昵称与邮箱，方便联系您哦(#^.^#)",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2021
+            <i class="icon icon-lg icon-heartbeat"></i>
+            <a href="https://lry61.cn/Joy-blog">lry61.cn/Joy-blog</a>
+            <!-- <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a> -->
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <!-- <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/> -->
+
+        <!-- <span class="license"><a  target="_blank" rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span> -->
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/Joy-blog/img/dog.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/Joy-blog/img/wechat.jpg" data-alipay="/Joy-blog/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&title=《JS数组去重》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&title=《JS数组去重》 — Dog Lai's Blog&source=JS数组去重的几种实现方式" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS数组去重》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3awW5iMQwF0P7/T89IXVUaoPfaCe1I560QBZLjRZza/viInz+fz9fXX5/X77/+zWfPs3U/bjx4eHh4o60ny/y7QPvJZxudUV9/Hg8PD+82b5YMXm+xTTl5yJI94+Hh4f0G3mv25p08eeDh4eH9j7z8Kjxj5wURPDw8vJ/lzQoByVU4P+hz/JVaCx4eHl7MmzXAfvb19f4eHh4e3qirvmmG5SXgPJ3Uu8XDw8O7wEu2Ff3DPxommF2183Xx8PDw7vFmX9sklXbFfHChvnzj4eHhLXjJxTdv/LchaBtgdSLBw8PDO8SbFR1meaZNMG0R+cHn8fDw8N7OO5x5RmkmCfHTtfDw8PAu8Nqy7GxMah++PME8+B08PDy8o7xkc7P2f/sL+SU+DwEeHh7eO3kzdlIsSEq3bWr5poyLh4eHd5S3SQDJJmbX6FNFYTw8PLx7vFk7Kj++9+GYlYbx8PDwbvDaEajZX9vEs2m21UNXeHh4eCVv0+jaLDwbvZo1w/Dw8PBu8PblgDa1zEYQZnvAw8PDO8ubHdZtU2p2KW+/FRUj8PDw8C7w9sWCU4MC+3Xx8PDwbvA2hYN9AWJThqiHrvDw8PAO8TatrzYEszJxSy0q03h4eHjrJzm4NyFrRwraEHyTWvDw8PAO8fL2VTs60LayNqf607Di4eHhXebNyg2nNpqHqQg0Hh4e3gXe/n/2pHSbl3Hz4u8wiHh4eHhr3masKjno2yt1OwQ2LEbg4eHhLXib9nyLyReeFUdWJQ88PDy8kpckg9n7s3ZamxjqjhweHh7eId4sGSQBSr67H1nAw8PD+528fJhgM0bQrrKaJsPDw8N7Oy8fLZ1du9vSxoP38fDw8K7xZsWI/JjOL8fJEFhxTcfDw8O7wNssmVxq2yM+Hwu4WLDAw8PDe8z7C9VVSt9nFuhFAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/Joy-blog/', SHARE: 'true', REWARD: 'true' };
+</script>
+
+<!-- jquery -->
+<script src="/Joy-blog/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/Joy-blog/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/Joy-blog/js/script.min.js?v=3.0" ></script>
+
+<!-- 相册&配置 -->
+<script src="/Joy-blog/js/photoswipe.min.js?v=3.0.min.js?v=3.0" ></script>
+<script src="/Joy-blog/js/photoswipe-ui-default.min.js?v=3.0.min.js?v=3.0"></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2021/04/07");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Dog Lai");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c Joy-blog %c  © Dog Lai  https://lry61.cn/Joy-blog \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
