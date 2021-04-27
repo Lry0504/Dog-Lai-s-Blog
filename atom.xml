@@ -6,7 +6,7 @@
   <link href="https://lry61.cn/Joy-blog/atom.xml" rel="self"/>
   
   <link href="https://lry61.cn/Joy-blog/"/>
-  <updated>2021-04-26T02:27:44.984Z</updated>
+  <updated>2021-04-27T08:35:50.147Z</updated>
   <id>https://lry61.cn/Joy-blog/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>手写Promise.all</title>
+    <link href="https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/"/>
+    <id>https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/</id>
+    <published>2021-04-27T08:35:49.000Z</published>
+    <updated>2021-04-27T08:35:50.147Z</updated>
+    
+    <content type="html"><![CDATA[<p>手写一个简单的promise.all</p><span id="more"></span><blockquote><p>实现思路：<br>Promise.all需要等到所有的promise的状态都变成fulfilled之后才resolve，但只要有一个promise失败就返回失败的结果</p></blockquote><p>实现代码：</p>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Promise.all = function(arr) {</span><br><span class="line">  return new Promise(function(resolve, reject) {</span><br><span class="line">    if(!Array.isArray(arr)) {</span><br><span class="line">      throw new Error("this is not array");</span><br><span class="line">    }</span><br><span class="line">    let dataArr = [];</span><br><span class="line">    let num = 0;</span><br><span class="line">    for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">      arr[i].then(function(data) {</span><br><span class="line">        dataArr.push(data);</span><br><span class="line">        num++;</span><br><span class="line">        if(num === arr.length) {</span><br><span class="line">          return resolve(data);</span><br><span class="line">        }</span><br><span class="line">      }).catch(function(error) {</span><br><span class="line">        return reject(error);</span><br><span class="line">      })</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;手写一个简单的promise.all&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="JavaScript" scheme="https://lry61.cn/Joy-blog/tags/JavaScript/"/>
+    
+    <category term="基础知识" scheme="https://lry61.cn/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
   
   <entry>
     <title>JS数组去重</title>

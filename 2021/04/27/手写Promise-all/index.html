@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>手写Promise.all | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="JavaScript,基础知识">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="手写一个简单的promise.all">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手写Promise.all">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/index.html">
+<meta property="og:site_name" content="Dog Lai&#39;s Blog">
+<meta property="og:description" content="手写一个简单的promise.all">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-27T08:35:49.000Z">
+<meta property="article:modified_time" content="2021-04-27T08:35:50.147Z">
+<meta property="article:author" content="Dog Lai">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="Dog Lai&#39;s Blog" href="https://lry61.cn/Joy-blog/atom.xml">
+    
+    <link rel="shortcut icon" href="/Joy-blog/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/Joy-blog/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+    
+      <script>(function (i, s, o, g, r, a, m) {
+          i['DaoVoiceObject'] = r;
+          i[r] = i[r] ||
+            function () {
+              (i[r].q = i[r].q || []).push(arguments);
+            };
+          i[r].l = 1 * new Date();
+          a = s.createElement(o);
+          m = s.getElementsByTagName(o)[0];
+          a.async = 1;
+          a.src = g;
+          a.charset = 'utf-8';
+          m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', ('https:' === document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/68f0bc04.js", 'daovoice');
+        daovoice('init', {
+          app_id: "68f0bc04",
+          user_id: "NO_89757",
+          name: "Dog Lai",
+          email: "lry885175073@163.com"
+        });
+        daovoice('update');
+      </script>
+    
+            
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/Joy-blog/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/Joy-blog/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">Dog Lai</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/artitalk"  >
+                    <i class="icon icon-lg icon-heartbeat"></i>
+                    <span>圈子</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/photos"  >
+                    <i class="icon icon-lg icon-image"></i>
+                    <span>相册</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/Joy-blog/about"  >
+                    <i class="icon icon-lg icon-paper-plane"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:lry885175073@163.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/Lry0504" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+              <a class="nav2item" data-title="微博" href="https://weibo.com/u/5234618200" target="_blank"title="微博" >
+                <i class="icon icon-lg icon-weibo weibo"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">手写Promise.all</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="https://lry61.cn/Joy-blog/atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+          <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-手写Promise-all"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">手写Promise.all</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2021-04-27 16:35:49" datetime="2021-04-27T08:35:49.000Z"  itemprop="datePublished">2021-04-27</time>
+
+            <br id="mybreak"/>
+            
+<script>
+	mybreak.style="display:none";
+</script>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>手写一个简单的promise.all</p>
+<span id="more"></span>
+
+<blockquote>
+<p>实现思路：<br>Promise.all需要等到所有的promise的状态都变成fulfilled之后才resolve，但只要有一个promise失败就返回失败的结果</p>
+</blockquote>
+<p>实现代码：</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Promise.all = function(arr) {</span><br><span class="line">  return new Promise(function(resolve, reject) {</span><br><span class="line">    if(!Array.isArray(arr)) {</span><br><span class="line">      throw new Error("this is not array");</span><br><span class="line">    }</span><br><span class="line">    let dataArr = [];</span><br><span class="line">    let num = 0;</span><br><span class="line">    for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">      arr[i].then(function(data) {</span><br><span class="line">        dataArr.push(data);</span><br><span class="line">        num++;</span><br><span class="line">        if(num === arr.length) {</span><br><span class="line">          return resolve(data);</span><br><span class="line">        }</span><br><span class="line">      }).catch(function(error) {</span><br><span class="line">        return reject(error);</span><br><span class="line">      })</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+        </div>
+
+        <div>
+  <div style="text-align:center;color: #999;font-size:14px;margin-bottom: 10px;">-------------本文结束<i class="icon icon-paw" style="margin: 0 3px;"></i>感谢您的阅读-------------</div>
+</div>
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新：<time datetime="2021-04-27T08:35:50.147Z" itemprop="dateUpdated">2021-04-27 16:35:50</time>
+</span>
+
+
+        
+          原文链接：<a href="/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/04/27/手写Promise-all/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://lry61.cn/Joy-blog/about/'">
+            <img src="/Joy-blog/img/avatar.jpg" alt="Dog Lai">
+            <a>Dog Lai</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&source=手写一个简单的promise.all" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手写Promise.all》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：JS数组去重">下一篇：JS数组去重</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "BYSfKXO7eaaqTbA6NfbS9z62-MdYXbMMI",
+            appKey: "BjBVe7OxLYmKkrhuEsodMFHh",
+            avatar: "mm",
+            placeholder: "欢迎留言~~ 记得填写昵称与邮箱，方便联系您哦(#^.^#)",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2021
+            <i class="icon icon-lg icon-heartbeat"></i>
+            <a href="https://lry61.cn/Joy-blog">lry61.cn/Joy-blog</a>
+            <!-- <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a> -->
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <!-- <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/> -->
+
+        <!-- <span class="license"><a  target="_blank" rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span> -->
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/Joy-blog/img/dog.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/Joy-blog/img/wechat.jpg" data-alipay="/Joy-blog/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&source=手写一个简单的promise.all" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手写Promise.all》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3a22oCQRAFwPz/TyeQJ0HWPX2ZaKD2SWSjUyPsdE7311d8ff9ej68fr6t7nl9fvVP9ruULDw8Pr7X0qytZ0PPnvF7ofA3J/Xh4eHineckDOnlYJ4vofUuy3Xh4eHifxqseGLs1Ph4eHt5/5OUHQ7IR82MDDw8P7728pISdlMu9wCJZz1rWgoeHhxfzJuXsu14f7+/h4eHhtbrq1XbUpDHWi3Rv1omHh4d3gJc09edDUdWod7JZ0R/g4eHhDXgJLIlrq4/yeUGfvIOHh4f3N7zXD/fJuFV+kOSbdfMz4OHh4R3gVT+oV/7m25QfHoUDBg8PD2+VV23h9xZaLcfX3sHDw8M7wMv77L3H+mTLeuHIJRIPDw9vidcLC/IBgt6dvWL98tzDw8PDO8CrBri9+6tNsjwULocReHh4eAPefFyg+sjOP7NXXhfiXTw8PLwWbys+6JW8+UhWMxDBw8PDO8xLvqDa5q8OIuRnV3mmDA8PD2+JV40Vqnf2rnlbDg8PD+8cL1n6VllcDY4n2exlSY2Hh4e3xNtadNL0yjerF93i4eHhneZN/tWf31M9APKhruYH4eHh4cW8/HjoFdy946H3+9xkLXh4eHhLvKiN9BJcxc8PmOZ68PDw8JZ4SUupNw7VK9MnY143bTA8PDy8JV4vDshL5Pz+3gBBE4OHh4c34OUtpWoxnf/tPAS53Eo8PDy8Y7xqWZwXvr02/yQ+Xqj68fDw8F62vvIrX1YeQ1SDj/JMGR4eHt4qbxJDVGPZvKGVF/ojEh4eHt6Alx8GeZhbHZDKm2H5+3h4eHineXm7q1d898Lf/NC6mYzAw8PD+xje6U59NRBZPhjw8PDwxrxJs78aXlTL/YWSGg8PD+9AGJEEuPkjOwFXN3oU4+Lh4eHFvN5IU1TOxlvQi4bzsQM8PDy8Jd4PbYLFOgojJ5MAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/Joy-blog/', SHARE: 'true', REWARD: 'true' };
+</script>
+
+<!-- jquery -->
+<script src="/Joy-blog/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/Joy-blog/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/Joy-blog/js/script.min.js?v=3.0" ></script>
+
+<!-- 相册&配置 -->
+<script src="/Joy-blog/js/photoswipe.min.js?v=3.0.min.js?v=3.0" ></script>
+<script src="/Joy-blog/js/photoswipe-ui-default.min.js?v=3.0.min.js?v=3.0"></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2021/04/07");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "Dog Lai");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c Joy-blog %c  © Dog Lai  https://lry61.cn/Joy-blog \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
