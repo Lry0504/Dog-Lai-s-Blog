@@ -6,7 +6,7 @@
     
     
     
-    <title>手写Promise.all | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <title>JS数组扁平化 | Dog Lai&#39;s Blog | Front-end development engineer</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -39,15 +39,15 @@
 
 
     
-    <meta name="description" content="手写一个简单的promise.all">
+    <meta name="description" content="JS扁平化的实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="手写Promise.all">
-<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/index.html">
+<meta property="og:title" content="JS数组扁平化">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/index.html">
 <meta property="og:site_name" content="Dog Lai&#39;s Blog">
-<meta property="og:description" content="手写一个简单的promise.all">
+<meta property="og:description" content="JS扁平化的实现">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-27T08:35:49.000Z">
-<meta property="article:modified_time" content="2021-04-27T09:11:02.226Z">
+<meta property="article:published_time" content="2021-05-06T00:56:46.000Z">
+<meta property="article:modified_time" content="2021-05-06T00:56:46.119Z">
 <meta property="article:author" content="Dog Lai">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="基础知识">
@@ -187,7 +187,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">手写Promise.all</div>
+        <div class="flex-col header-title ellipsis">JS数组扁平化</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -224,15 +224,22 @@
 
 <div class="container body-wrap">
     
-<article id="post-手写Promise-all"
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E9%80%92%E5%BD%92"><span class="post-toc-number">1.</span> <span class="post-toc-text">递归</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#reduce-concat"><span class="post-toc-number">2.</span> <span class="post-toc-text">reduce + concat</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ES6%E5%B1%95%E5%BC%80%E8%BF%90%E7%AE%97%E7%AC%A6%E2%80%A6"><span class="post-toc-number">3.</span> <span class="post-toc-text">ES6展开运算符…</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#flat"><span class="post-toc-number">4.</span> <span class="post-toc-text">flat</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#toString%E8%B0%83%E7%94%A8"><span class="post-toc-number">5.</span> <span class="post-toc-text">toString调用</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-JS数组扁平化"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">手写Promise.all</h1>
+        <h1 class="post-card-title">JS数组扁平化</h1>
         <div class="post-meta">
             <i class="icon icon-lg icon-calendar-o"></i>
             发表于
-            <time class="post-time" title="2021-04-27 16:35:49" datetime="2021-04-27T08:35:49.000Z"  itemprop="datePublished">2021-04-27</time>
+            <time class="post-time" title="2021-05-06 08:56:46" datetime="2021-05-06T00:56:46.000Z"  itemprop="datePublished">2021-05-06</time>
 
             <br id="mybreak"/>
             
@@ -251,17 +258,50 @@
         </div>
         <div class="post-count-custom">
             <i class="icon icon-lg icon-comment-o"></i>
-            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
+            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>手写一个简单的promise.all</p>
+            <p>JS扁平化的实现</p>
 <span id="more"></span>
 
-<blockquote>
-<p>实现思路：<br>Promise.all需要等到所有的promise的状态都变成fulfilled之后才resolve，但只要有一个promise失败就返回失败的结果</p>
+<p>所谓数组扁平化，就是将一个多层嵌套的数组，通过某种方式，转化为只有一层的数组</p>
+<p>全局变量：</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let array = [[1,2,3],4,5,6,[[7]],[]];</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><blockquote>
+<p>思路：循环遍历数组，判断循环的元素是否仍是数组。如果是，则递归调用</p>
 </blockquote>
-<p>实现代码：</p>
-  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Promise.all = function(arr) {</span><br><span class="line">  return new Promise(function(resolve, reject) {</span><br><span class="line">    if(!Array.isArray(arr)) {</span><br><span class="line">      throw new Error("this is not array");</span><br><span class="line">    }</span><br><span class="line">    let dataArr = [];</span><br><span class="line">    let num = 0;</span><br><span class="line">    for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">      arr[i].then(function(data) {</span><br><span class="line">        dataArr.push(data);</span><br><span class="line">        num++;</span><br><span class="line">        if(num === arr.length) {</span><br><span class="line">          return resolve(data);</span><br><span class="line">        }</span><br><span class="line">      }).catch(function(error) {</span><br><span class="line">        return reject(error);</span><br><span class="line">      })</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr, result = []) {</span><br><span class="line">  for(let item of arr) {</span><br><span class="line">    if(Array.isArray(item)) {</span><br><span class="line">      flatten(item, result);</span><br><span class="line">    } else {</span><br><span class="line">      result.push(item);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return result;</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="reduce-concat"><a href="#reduce-concat" class="headerlink" title="reduce + concat"></a>reduce + concat</h2><blockquote>
+<p>思路：reduce遍历数组的每一个元素，如果该元素仍是数组，则重新调用该方法，否则concat到数组中</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  return arr.reduce((acc, cur) =&gt; {</span><br><span class="line">    return acc.concat(Array.isArray(cur) ? flatten(cur) : cur);</span><br><span class="line">  }, [])</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="ES6展开运算符…"><a href="#ES6展开运算符…" class="headerlink" title="ES6展开运算符…"></a>ES6展开运算符…</h2><blockquote>
+<p>思路：ES6中的展开运算符用来取出参数对象中的所有可遍历属性，拷贝到当前对象中</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log([].concat(...array)); // [1,2,3,4,5,6,[7]]</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>[].concat(...arr)</code>只能拉平一层数组，但我们根据这个可以想到，利用while循环判断数组中某个元素是否仍为数组，如果仍是数组，则继续拉平。</p>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  while(arr.some(item =&gt; Array.isArray(item))) {</span><br><span class="line">    arr = [].concat(...arr);</span><br><span class="line">  }</span><br><span class="line">  return arr;</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="flat"><a href="#flat" class="headerlink" title="flat"></a>flat</h2><blockquote>
+<p>思路：[].flat(index)可以拉平数组，其中index表示拉平多少层数组。如果要拉平无限层数组，则可以使用Infinity参数</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(array.flat(Infinity)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="toString调用"><a href="#toString调用" class="headerlink" title="toString调用"></a>toString调用</h2><blockquote>
+<p>思路：如果数组中的元素都是数字，我们才可以考虑使用toString方法。调用toString方法，返回一个用逗号分隔的扁平字符串。利用split分隔逗号，得到一个string数组，在遍历数组每个元素，转化为number类型</p>
+</blockquote>
+  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  return arr.toString().split(",").map(item =&gt; +item)</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7,0]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>上面方法存在很大的局限性：</p>
+<ol>
+<li>如果arr中存在空数组，则会被转化成空字符串，转成number时变为0</li>
+<li>如果数组中存在非数字，则会产生错误结果</li>
+</ol>
+
         </div>
 
         <div>
@@ -271,12 +311,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2021-04-27T09:11:02.226Z" itemprop="dateUpdated">2021-04-27 17:11:02</time>
+    最后更新：<time datetime="2021-05-06T00:56:46.119Z" itemprop="dateUpdated">2021-05-06 08:56:46</time>
 </span>
 
 
         
-          原文链接：<a href="/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/04/27/手写Promise-all/</a>
+          原文链接：<a href="/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" target="_blank" rel="external">https://lry61.cn/Joy-blog/2021/05/06/JS数组扁平化/</a>
         
     </div>
     <footer>
@@ -308,7 +348,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&title=《JS数组扁平化》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -318,22 +358,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&source=手写一个简单的promise.all" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&title=《JS数组扁平化》 — Dog Lai's Blog&source=JS扁平化的实现" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手写Promise.all》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS数组扁平化》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -353,21 +393,13 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" id="post-prev" class="post-nav-link">
-        <h4 class="title" >
-          上一篇：JS数组扁平化
-        </h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/Joy-blog/2021/04/26/JS%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" id="post-next" class="post-nav-link">
-        <h4 class="title" data-hover="下一篇：JS数组去重">下一篇：JS数组去重</h4>
+      <a href="/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：手写Promise.all">下一篇：手写Promise.all</h4>
       </a>
     </div>
   
@@ -490,7 +522,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&title=《JS数组扁平化》 — Dog Lai's Blog&pic=https://lry61.cn/Joy-blog/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -500,22 +532,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&title=《手写Promise.all》 — Dog Lai's Blog&source=手写一个简单的promise.all" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&title=《JS数组扁平化》 — Dog Lai's Blog&source=JS扁平化的实现" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《手写Promise.all》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS数组扁平化》 — Dog Lai's Blog&url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/&via=https://lry61.cn/Joy-blog" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -526,7 +558,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p class="wechatshare">扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3a22oCQRAFwPz/TyeQJ0HWPX2ZaKD2SWSjUyPsdE7311d8ff9ej68fr6t7nl9fvVP9ruULDw8Pr7X0qytZ0PPnvF7ofA3J/Xh4eHineckDOnlYJ4vofUuy3Xh4eHifxqseGLs1Ph4eHt5/5OUHQ7IR82MDDw8P7728pISdlMu9wCJZz1rWgoeHhxfzJuXsu14f7+/h4eHhtbrq1XbUpDHWi3Rv1omHh4d3gJc09edDUdWod7JZ0R/g4eHhDXgJLIlrq4/yeUGfvIOHh4f3N7zXD/fJuFV+kOSbdfMz4OHh4R3gVT+oV/7m25QfHoUDBg8PD2+VV23h9xZaLcfX3sHDw8M7wMv77L3H+mTLeuHIJRIPDw9vidcLC/IBgt6dvWL98tzDw8PDO8CrBri9+6tNsjwULocReHh4eAPefFyg+sjOP7NXXhfiXTw8PLwWbys+6JW8+UhWMxDBw8PDO8xLvqDa5q8OIuRnV3mmDA8PD2+JV40Vqnf2rnlbDg8PD+8cL1n6VllcDY4n2exlSY2Hh4e3xNtadNL0yjerF93i4eHhneZN/tWf31M9APKhruYH4eHh4cW8/HjoFdy946H3+9xkLXh4eHhLvKiN9BJcxc8PmOZ68PDw8JZ4SUupNw7VK9MnY143bTA8PDy8JV4vDshL5Pz+3gBBE4OHh4c34OUtpWoxnf/tPAS53Eo8PDy8Y7xqWZwXvr02/yQ+Xqj68fDw8F62vvIrX1YeQ1SDj/JMGR4eHt4qbxJDVGPZvKGVF/ojEh4eHt6Alx8GeZhbHZDKm2H5+3h4eHineXm7q1d898Lf/NC6mYzAw8PD+xje6U59NRBZPhjw8PDwxrxJs78aXlTL/YWSGg8PD+9AGJEEuPkjOwFXN3oU4+Lh4eHFvN5IU1TOxlvQi4bzsQM8PDy8Jd4PbYLFOgojJ5MAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADGUlEQVR42u3awW4bMQwEUP//T7tA0UOB1ushqQVi+u0pMGJbTzlMNNTjET/P38/fP+ev/Pskn1/99scdDzY2NvaHsJMlvlrK9YKSpSfPNa+53djY2Njr2JNQmURLLw6r34iNjY2N/Ww9k2PJJESxsbGxsa8DrHc86P3ONbL3XdjY2Nhb2XkIVTfiOrQm1dUoLLGxsbEXsXuD3p/58+3zbWxsbOwfxn4efZIqqjokzo8ZhXViY2NjL2InV21O3V2sHid6UVoINmxsbOzV7Lyaycex+Sg3Carq70cBho2Njb2IXf6I2951KjL/8wo2Njb2IvapI0peMCUxVq3+J7UUNjY29qezq4XOfCOqZVBeGBUiExsbG3sduzeszQ8h1SXOP+HNIQQbGxt7NbuHn5T+8yAsRzI2Njb2Cnb+z311cNvbjvxzetd3/ryCjY2NvZQ9L4nyBVXrqrMRi42Njb2JfXdnnl+amX/aaL6NjY2NvZSdX2TM6568+u+tqlpXYWNjY386u8qrXvGplkFnR8UvFdjY2NiL2JP4yav/eRl0SzRiY2Njr2AnQ9YeoBczeT00GjBgY2Njr2Pnlf3kUs5oENtaDzY2Nvb3sE8dMKpjg15QJQXWm0jDxsbGXsfuFfHJ59yxQb1q6eVUBBsbG3sFOxnKzg8MZzdotJXY2NjYS9ln657eVlbHzNVwLfxlsLGxsT+Endc0+bi3OgDOR7xnNwsbGxt7B7ta0OeVUzXGTtVPUfRiY2NjL2LnNU1eBk0qp94m9kYa2NjY2JvYeflSrfuT904OMNVNxMbGxt7NLv8rH0dONQJ7lVPvEIWNjY29lV0NmN7Skyhqjml7kxBsbGzsD2Q/i8/kikyvPJqMe19uLjY2NvYi9jzM8i/Lo6t6HMrfhY2Njb2VXR3fVg8J8wNJdUQRBRg2Njb2OnYvGJJLM9UxQ29zq0MLbGxs7G9mV2OjegbqXespH2mwsbGxv5I9KY8mA+N8PckfBhsbG3srOx/u9sImB1+z80tCbw5C2NjY2IvYvUFvHhWTpVSLrXKMYWNjY382+xdqBf1hrxSg6QAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

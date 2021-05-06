@@ -6,7 +6,7 @@
     
     
     
-    <title>归档 | Dog Lai&#39;s Blog | Front-end development engineer</title>
+    <title>标签: 基础知识 | Dog Lai&#39;s Blog | Front-end development engineer</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="#77AAFF">
@@ -42,7 +42,7 @@
     <meta name="description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dog Lai&#39;s Blog">
-<meta property="og:url" content="https://lry61.cn/Joy-blog/archives/page/2/index.html">
+<meta property="og:url" content="https://lry61.cn/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/page/2/index.html">
 <meta property="og:site_name" content="Dog Lai&#39;s Blog">
 <meta property="og:description" content="Author:Dog Lai,Category:Personal Blog">
 <meta property="og:locale" content="zh_CN">
@@ -118,14 +118,14 @@
                   </a>
               </li>
             
-              <li class="waves-block waves-effect active">
+              <li class="waves-block waves-effect">
                   <a href="/Joy-blog/archives"  >
                     <i class="icon icon-lg icon-archives"></i>
                     <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
                   </a>
               </li>
             
-              <li class="waves-block waves-effect">
+              <li class="waves-block waves-effect active">
                   <a href="/Joy-blog/tags"  >
                     <i class="icon icon-lg icon-tags"></i>
                     <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
@@ -184,7 +184,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">归档</div>
+        <div class="flex-col header-title ellipsis">标签: 基础知识</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -201,7 +201,7 @@
         </a>
     </div>
 </header>
-<header class="content-header archives-header">
+<header class="content-header tags-header">
     
     
     <div class="container fade-scale">
@@ -211,7 +211,29 @@
             </h1>
             <h5 class="subtitle">
                 
-                    <h1 class="archivestitle">日积月累，提升自我</h1>
+                    <h1 id="pagetitle" class="archivestitle"></h1>
+                    <script>
+                      var arr = location.href.split("Joy-blog/");
+                      switch (arr[1]) {
+                        case 'about/':
+                          pagetitle.textContent = 'About myself';
+                          break;
+                        case 'tags/':
+                          pagetitle.textContent = 'Tags';
+                          break;
+                        case 'categories/':
+                          pagetitle.textContent = 'Categories';
+                          break;
+                        case 'artitalk/':
+                          pagetitle.textContent = '圈子';
+                          break;
+                        case 'photos/':
+                          pagetitle.textContent = '相册';
+                          break;
+                        default:
+                          break;
+                      }
+                    </script>
                 
             </h5>
         </div>
@@ -219,25 +241,26 @@
 
 </header>
 
-<div class="container body-wrap fade">
-    
 
-    
+    <div class="container body-wrap fade">
+        
             
-            <h3 class="archive-separator">
-                <i class="icon icon-lg icon-folder-o"></i>&nbsp;&nbsp;
-                2021
-            </h3>
+            
+            <h5 class="tag-tip">
+                <i class="icon icon-tag"></i>
+                关于
+                <span style="color:rgb(100, 100, 100)">基础知识</span>
+                共11篇文章
+            </h5>
             <div class="waterfall">
-    
-
-        <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/12/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD/'">
+            
+                <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/12/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD/'">
     <div class="archive-article-date">
       
       <time class="my-post-time">
         <i class="icon icon-lg icon-file-text-o"></i>
         &nbsp;
-          04-12
+          2021-04-12
       </time>
     </div>
     <div class="archive-article-inner">
@@ -258,42 +281,13 @@
 
     </div>
   </article>
+            
+            </div>
+        
 
-    
-
-        <article class="archive-article" onclick="location.href='/Joy-blog/2021/04/07/welcome/'">
-    <div class="archive-article-date">
-      
-      <time class="my-post-time">
-        <i class="icon icon-lg icon-file-text-o"></i>
-        &nbsp;
-          04-07
-      </time>
-    </div>
-    <div class="archive-article-inner">
-      
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/Joy-blog/2021/04/07/welcome/">Welcome to Dog Lai&#39;s Blog</a>
-    </h3>
-  
-
-
-
-      <br/>
-      
-    </div>
-  </article>
-
-    
-    </div>
-
-    
 <nav id="page-nav">
     <div class="inner">
-    <a class="extend prev" rel="prev" href="/Joy-blog/archives/">上一页</a><a class="page-number" href="/Joy-blog/archives/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">上一页</a><a class="page-number" href="/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">1</a><span class="page-number current">2</span>
     </div>
 </nav>
 

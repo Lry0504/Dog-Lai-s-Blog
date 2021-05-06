@@ -6,7 +6,7 @@
   <link href="https://lry61.cn/Joy-blog/atom.xml" rel="self"/>
   
   <link href="https://lry61.cn/Joy-blog/"/>
-  <updated>2021-04-27T08:35:50.147Z</updated>
+  <updated>2021-05-06T00:56:46.119Z</updated>
   <id>https://lry61.cn/Joy-blog/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JS数组扁平化</title>
+    <link href="https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/"/>
+    <id>https://lry61.cn/Joy-blog/2021/05/06/JS%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/</id>
+    <published>2021-05-06T00:56:46.000Z</published>
+    <updated>2021-05-06T00:56:46.119Z</updated>
+    
+    <content type="html"><![CDATA[<p>JS扁平化的实现</p><span id="more"></span><p>所谓数组扁平化，就是将一个多层嵌套的数组，通过某种方式，转化为只有一层的数组</p><p>全局变量：</p>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let array = [[1,2,3],4,5,6,[[7]],[]];</span><br></pre></td></tr></tbody></table></figure><h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><blockquote><p>思路：循环遍历数组，判断循环的元素是否仍是数组。如果是，则递归调用</p></blockquote>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr, result = []) {</span><br><span class="line">  for(let item of arr) {</span><br><span class="line">    if(Array.isArray(item)) {</span><br><span class="line">      flatten(item, result);</span><br><span class="line">    } else {</span><br><span class="line">      result.push(item);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  return result;</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure><h2 id="reduce-concat"><a href="#reduce-concat" class="headerlink" title="reduce + concat"></a>reduce + concat</h2><blockquote><p>思路：reduce遍历数组的每一个元素，如果该元素仍是数组，则重新调用该方法，否则concat到数组中</p></blockquote>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  return arr.reduce((acc, cur) =&gt; {</span><br><span class="line">    return acc.concat(Array.isArray(cur) ? flatten(cur) : cur);</span><br><span class="line">  }, [])</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure><h2 id="ES6展开运算符…"><a href="#ES6展开运算符…" class="headerlink" title="ES6展开运算符…"></a>ES6展开运算符…</h2><blockquote><p>思路：ES6中的展开运算符用来取出参数对象中的所有可遍历属性，拷贝到当前对象中</p></blockquote>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log([].concat(...array)); // [1,2,3,4,5,6,[7]]</span><br></pre></td></tr></tbody></table></figure><p><code>[].concat(...arr)</code>只能拉平一层数组，但我们根据这个可以想到，利用while循环判断数组中某个元素是否仍为数组，如果仍是数组，则继续拉平。</p>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  while(arr.some(item =&gt; Array.isArray(item))) {</span><br><span class="line">    arr = [].concat(...arr);</span><br><span class="line">  }</span><br><span class="line">  return arr;</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure><h2 id="flat"><a href="#flat" class="headerlink" title="flat"></a>flat</h2><blockquote><p>思路：[].flat(index)可以拉平数组，其中index表示拉平多少层数组。如果要拉平无限层数组，则可以使用Infinity参数</p></blockquote>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(array.flat(Infinity)); // [1,2,3,4,5,6,7]</span><br></pre></td></tr></tbody></table></figure><h2 id="toString调用"><a href="#toString调用" class="headerlink" title="toString调用"></a>toString调用</h2><blockquote><p>思路：如果数组中的元素都是数字，我们才可以考虑使用toString方法。调用toString方法，返回一个用逗号分隔的扁平字符串。利用split分隔逗号，得到一个string数组，在遍历数组每个元素，转化为number类型</p></blockquote>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function flatten(arr) {</span><br><span class="line">  return arr.toString().split(",").map(item =&gt; +item)</span><br><span class="line">}</span><br><span class="line">console.log(flatten(array)); // [1,2,3,4,5,6,7,0]</span><br></pre></td></tr></tbody></table></figure><p>上面方法存在很大的局限性：</p><ol><li>如果arr中存在空数组，则会被转化成空字符串，转成number时变为0</li><li>如果数组中存在非数字，则会产生错误结果</li></ol>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;JS扁平化的实现&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="JavaScript" scheme="https://lry61.cn/Joy-blog/tags/JavaScript/"/>
+    
+    <category term="基础知识" scheme="https://lry61.cn/Joy-blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>手写Promise.all</title>
     <link href="https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/"/>
     <id>https://lry61.cn/Joy-blog/2021/04/27/%E6%89%8B%E5%86%99Promise-all/</id>
     <published>2021-04-27T08:35:49.000Z</published>
-    <updated>2021-04-27T08:35:50.147Z</updated>
+    <updated>2021-04-27T09:11:02.226Z</updated>
     
     <content type="html"><![CDATA[<p>手写一个简单的promise.all</p><span id="more"></span><blockquote><p>实现思路：<br>Promise.all需要等到所有的promise的状态都变成fulfilled之后才resolve，但只要有一个promise失败就返回失败的结果</p></blockquote><p>实现代码：</p>  <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Promise.all = function(arr) {</span><br><span class="line">  return new Promise(function(resolve, reject) {</span><br><span class="line">    if(!Array.isArray(arr)) {</span><br><span class="line">      throw new Error("this is not array");</span><br><span class="line">    }</span><br><span class="line">    let dataArr = [];</span><br><span class="line">    let num = 0;</span><br><span class="line">    for(let i = 0; i &lt; arr.length; i++) {</span><br><span class="line">      arr[i].then(function(data) {</span><br><span class="line">        dataArr.push(data);</span><br><span class="line">        num++;</span><br><span class="line">        if(num === arr.length) {</span><br><span class="line">          return resolve(data);</span><br><span class="line">        }</span><br><span class="line">      }).catch(function(error) {</span><br><span class="line">        return reject(error);</span><br><span class="line">      })</span><br><span class="line">    }</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>]]></content>
     
